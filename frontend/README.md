@@ -1,32 +1,155 @@
-# React + TypeScript + Vite
+# HR Assistant Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> A modern React application that provides an intuitive chat interface for querying HR policies using a Retrieval-Augmented Generation (RAG) backend.
 
-Currently, two official plugins are available:
+The frontend communicates with a FastAPI backend to deliver context-aware answers sourced from HR policy documents. Built with React, TypeScript, Vite, Material UI, and Axios.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Modern chat interface
+- Real-time communication with FastAPI
+- Suggested HR topics
+- Source-aware AI responses
+- Responsive layout
+- TypeScript support
+- Material UI components
+- Axios API integration
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Technology Stack
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+| Technology | Purpose |
+|------------|---------|
+| React 19 | UI Library |
+| TypeScript | Type Safety |
+| Vite | Build Tool |
+| Material UI | UI Components |
+| Axios | API Client |
+| React Router | Routing |
+
+---
+
+## Screenshots
+
+### Home Screen
+
+> Add `docs/images/home.png`
+
+### Sample Conversation
+
+> Add `docs/images/chat.png`
+
+---
+
+## Project Structure
+
+```text
+src/
+├── api/
+├── assets/
+├── components/
+├── pages/
+├── types/
+├── App.tsx
+└── main.tsx
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## Getting Started
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run Development Server
+
+```bash
+npm run dev
+```
+
+Application:
+
+```
+http://localhost:5173
+```
+
+---
+
+## Backend Configuration
+
+Update the API base URL if required.
+
+Example:
+
+```ts
+const API_URL = "http://localhost:8000";
+```
+
+Ensure the FastAPI backend is running before starting the frontend.
+
+---
+
+## Build
+
+```bash
+npm run build
+```
+
+Preview production build:
+
+```bash
+npm run preview
+```
+
+---
+
+## Available Scripts
+
+```bash
+npm run dev
+```
+
+Starts the development server.
+
+```bash
+npm run build
+```
+
+Creates a production build.
+
+```bash
+npm run preview
+```
+
+Serves the production build locally.
+
+```bash
+npm run lint
+```
+
+Runs Oxlint.
+
+---
+
+## Future Improvements
+
+- Markdown rendering
+- Conversation history
+- Authentication
+- Streaming responses
+- Dark mode
+- Mobile optimization
+- Document source citations
+- File upload support
+
+---
+
+## License
+
+Educational and demonstration purposes.
