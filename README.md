@@ -1,44 +1,94 @@
-# Simple HR RAG System (Local)
+# HR Assistant RAG System
 
-A lightweight Retrieval-Augmented Generation (RAG) application built using **FastAPI**, **LangChain**, **FAISS**, and **Ollama**. The application allows users to ask questions about HR policies stored in PDF documents and receive context-aware responses generated entirely on a local machine.
+> A lightweight Retrieval-Augmented Generation (RAG) application that enables users to query HR policy documents using natural language. Built with **FastAPI**, **LangChain**, **FAISS**, and **Ollama**, the entire pipeline runs locally without relying on external AI services.
+
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688)
+![LangChain](https://img.shields.io/badge/LangChain-RAG-green)
+![Ollama](https://img.shields.io/badge/Ollama-Local%20LLM-black)
+![FAISS](https://img.shields.io/badge/FAISS-Vector%20Database-orange)
 
 ---
 
-# Features
+## Overview
 
-- Local LLM inference using Ollama
+This project demonstrates an end-to-end Retrieval-Augmented Generation (RAG) pipeline for answering questions from HR policy documents.
+
+Instead of relying solely on a Large Language Model (LLM), the application retrieves the most relevant document sections using semantic search before generating a response. This approach improves response accuracy while minimizing hallucinations.
+
+The solution is designed to run completely offline using locally hosted embedding and language models through Ollama.
+
+---
+
+## Features
+
+- Fully local RAG pipeline
 - PDF document ingestion
-- Automatic text chunking
 - Semantic search using FAISS
-- Local embedding generation
-- REST API built with FastAPI
-- No external APIs required
-- Fully offline inference
+- Local embeddings with Ollama
+- Local LLM inference
+- FastAPI REST API
+- Automatic OpenAPI (Swagger) documentation
+- Source page references
+- Support for multiple PDF documents
+- No external AI APIs required
 
 ---
 
-# Tech Stack
+## Technology Stack
 
 | Technology | Purpose |
 |------------|---------|
-| Python 3.14 | Backend |
+| Python | Backend |
 | FastAPI | REST API |
 | LangChain | RAG Pipeline |
 | Ollama | Local LLM & Embeddings |
 | FAISS | Vector Database |
-| PyPDF | PDF Parsing |
+| PyPDF | PDF Processing |
 | Pydantic | Request Validation |
 
 ---
 
-# Project Structure
+## Architecture
 
+```text
+                    PDF Documents
+                           │
+                           ▼
+                  PyPDF Document Loader
+                           │
+                           ▼
+          RecursiveCharacterTextSplitter
+                           │
+                           ▼
+      Ollama Embeddings (nomic-embed-text)
+                           │
+                           ▼
+               FAISS Vector Database
+                           │
+             User Question (FastAPI API)
+                           │
+                           ▼
+                Semantic Similarity Search
+                           │
+                           ▼
+                 Prompt Construction
+                           │
+                           ▼
+             Llama 3.2 (Ollama Local LLM)
+                           │
+                           ▼
+                    JSON API Response
 ```
-simple-hr-rag-system/
-│
+
+---
+
+## Project Structure
+
+```text
+.
 ├── data/
-│   └── sample_hr_policy.pdf
-│
+│   └── Sample_Employee_Handbook_HR_Policies.pdf
 ├── main.py
 ├── requirements.txt
 └── README.md
@@ -46,72 +96,37 @@ simple-hr-rag-system/
 
 ---
 
-# RAG Pipeline
+## Getting Started
 
-```
-PDF Documents
-      │
-      ▼
-PyPDFLoader
-      │
-      ▼
-RecursiveCharacterTextSplitter
-      │
-      ▼
-Ollama Embeddings
-(nomic-embed-text)
-      │
-      ▼
-FAISS Vector Store
-      │
-      ▼
-Retriever
-      │
-      ▼
-Prompt Template
-      │
-      ▼
-Llama 3.2 (Ollama)
-      │
-      ▼
-FastAPI Response
-```
+### Prerequisites
 
----
+- Python 3.x
+- Ollama
 
-# Installation
-
-## Clone Repository
+### Clone Repository
 
 ```bash
 git clone <repository-url>
-
-cd simple-hr-rag-system
+cd hr-assistant-rag
 ```
 
----
+### Create Virtual Environment
 
-## Create Virtual Environment
-
-Windows
+**Windows**
 
 ```bash
 python -m venv .venv
-
 .venv\Scripts\activate
 ```
 
-Linux / macOS
+**Linux/macOS**
 
 ```bash
 python3 -m venv .venv
-
 source .venv/bin/activate
 ```
 
----
-
-## Install Dependencies
+### Install Dependencies
 
 ```bash
 python -m pip install -r requirements.txt
@@ -119,13 +134,13 @@ python -m pip install -r requirements.txt
 
 ---
 
-# Install Ollama
+## Install Ollama
 
-Download
+Download Ollama from:
 
 https://ollama.com/download
 
-Verify
+Verify installation:
 
 ```bash
 ollama --version
@@ -133,42 +148,29 @@ ollama --version
 
 ---
 
-# Download Required Models
-
-Embedding Model
+## Download Required Models
 
 ```bash
 ollama pull nomic-embed-text
-```
 
-LLM
-
-```bash
 ollama pull llama3.2:1b
 ```
 
-Verify
+Verify:
 
 ```bash
 ollama list
 ```
 
-Expected
-
-```
-nomic-embed-text
-llama3.2:1b
-```
-
 ---
 
-# Run API
+## Run the Application
 
 ```bash
 uvicorn main:app --reload
 ```
 
-Swagger
+Swagger UI
 
 ```
 http://localhost:8000/docs
@@ -176,353 +178,112 @@ http://localhost:8000/docs
 
 ---
 
-# API
+## API
 
-POST
+### POST `/chat`
 
-```
-/chat
-```
-
-Request
+### Request
 
 ```json
 {
-    "message":"What is the leave policy?"
+  "message": "What is the leave policy?"
 }
 ```
 
-Response
+### Response
 
 ```json
 {
-    "success": true,
-    "question":"What is the leave policy?",
-    "reply":"Annual Leave: 14 days/year...",
-    "sources":[
-        {
-            "page":0
-        }
-    ]
-}
-```
-
----
-
-# Embedding Model
-
-```
-nomic-embed-text
-```
-
-Reason
-
-- Optimized for semantic search
-- Fast
-- Small memory footprint
-- Better retrieval quality than using chat models
-
----
-
-# LLM
-
-```
-llama3.2:1b
-```
-
-Configuration
-
-```python
-temperature=0
-num_predict=256
-num_ctx=2048
-```
-
-Reason
-
-- Fast local inference
-- Lower RAM usage
-- Deterministic responses
-
----
-
-# Retriever Configuration
-
-```python
-retriever = vectorstore.as_retriever(
-    search_type="similarity_score_threshold",
-    search_kwargs={
-        "k":3,
-        "score_threshold":0.5
+  "success": true,
+  "question": "What is the leave policy?",
+  "reply": "Annual leave is...",
+  "sources": [
+    {
+      "page": 12
     }
-)
+  ]
+}
 ```
 
 ---
 
-# Prompt Engineering
+## Sample Questions
 
-Prompt instructions include:
-
-- Answer only from supplied context
-- Ignore unrelated sections
-- Combine multiple relevant chunks
-- Return fallback message if answer is unavailable
-
-This significantly reduced hallucinations.
+- What is the annual leave policy?
+- What are the working hours?
+- What is the break policy?
+- What benefits are available?
+- What is the remote work policy?
+- What is the maternity leave policy?
 
 ---
 
-# Challenges Faced & Solutions
+## Design Highlights
 
-## 1. Python Not Installed
-
-Error
-
-```
-python is not recognized
-```
-
-Solution
-
-- Installed Python
-- Added Python to PATH
+- Uses semantic retrieval to provide context-aware answers.
+- Generates embeddings locally using `nomic-embed-text`.
+- Uses `llama3.2:1b` for lightweight local inference.
+- Applies similarity threshold retrieval to reduce irrelevant context.
+- Prompt design limits responses to retrieved document content to minimize hallucinations.
 
 ---
 
-## 2. pip Not Found
+## Current Limitations
 
-Error
-
-```
-pip is not recognized
-```
-
-Solution
-
-```
-python -m pip
-```
-
-was used instead of
-
-```
-pip
-```
+- FAISS index is rebuilt on application startup.
+- No conversation memory.
+- In-memory vector database.
+- No authentication or authorization.
+- Optimized for small to medium document collections.
 
 ---
 
-## 3. Missing Packages
+## Future Enhancements
 
-Errors
-
-```
-ModuleNotFoundError
-```
-
-Examples
-
-```
-langchain_ollama
-```
-
-```
-pypdf
-```
-
-Solution
-
-```
-python -m pip install <package>
-```
-
----
-
-## 4. Ollama Connection Error
-
-```
-Failed to connect to Ollama
-```
-
-Cause
-
-Ollama server not running.
-
-Solution
-
-Install Ollama and ensure the service is running.
-
----
-
-## 5. Model Not Found
-
-Error
-
-```
-model "llama3" not found
-```
-
-Cause
-
-Installed model
-
-```
-llama3.2
-```
-
-Code expected
-
-```
-llama3
-```
-
-Solution
-
-Updated
-
-```python
-model="llama3.2"
-```
-
----
-
-## 6. Incorrect Embedding Model
-
-Initially
-
-```python
-OllamaEmbeddings(
-    model="llama3"
-)
-```
-
-Issue
-
-Llama is a chat model, not an embedding model.
-
-Solution
-
-```python
-model="nomic-embed-text"
-```
-
----
-
-## 7. Partial Answers
-
-Issue
-
-Questions like
-
-```
-Leave Policy
-```
-
-returned incomplete responses.
-
-Cause
-
-Small chunk size and limited retrieval.
-
-Solution
-
-- Improved prompt
-- Added semantic retrieval
-- Tuned retriever
-- Experimented with chunk sizes
-
----
-
-## 8. Irrelevant Context Retrieved
-
-Issue
-
-Responses sometimes contained unrelated policies.
-
-Solution
-
-Updated prompt:
-
-- Only answer from relevant context
-- Ignore unrelated sections
-- Merge only relevant chunks
-
----
-
-## 9. Chunking Strategy
-
-Initially
-
-```python
-chunk_size=500
-chunk_overlap=50
-```
-
-Later improved with section-aware separators.
-
-```python
-separators=[
-"\n\n\d+\.",
-"\n\n",
-"\n",
-" "
-]
-```
-
----
-
-## 10. Performance Optimization
-
-Applied
-
-- llama3.2:1b
-- num_predict=256
-- num_ctx=2048
-- similarity_score_threshold retriever
-- Local embeddings
-- Local FAISS search
-
-These changes improved response speed while maintaining good answer quality.
-
----
-
-# Future Improvements
-
-- Persist FAISS index to disk
+- Persistent FAISS index
 - Incremental document indexing
-- Multi-PDF support
 - Conversation memory
 - Metadata filtering
-- Hybrid Search (BM25 + FAISS)
+- Hybrid Search (BM25 + Vector Search)
 - Cross-Encoder Re-ranking
 - Streaming responses
-- Authentication
 - Docker support
-- Unit tests
+- Unit and integration tests
 - CI/CD pipeline
-- Azure/AWS deployment
+- Cloud deployment (Azure/AWS)
 
 ---
 
-# Lessons Learned
+## Sample Document
 
-This project provided practical experience with:
+The application automatically indexes all PDF files placed in the `data/` directory.
 
-- Retrieval-Augmented Generation (RAG)
-- Vector databases
-- Embedding models
-- Local LLM deployment
-- Prompt engineering
-- Semantic search
-- LangChain integration
-- FastAPI development
-- Troubleshooting Python environments
-- Ollama model management
-- Performance tuning for local AI applications
+Current sample document:
+
+```text
+data/
+└── Sample_Employee_Handbook_HR_Policies.pdf
+```
 
 ---
 
-# License
+## Screenshots
+
+> Add screenshots of:
+>
+> - React UI
+> - Swagger UI
+> - Sample question and response
+> - System architecture (optional)
+
+---
+
+## Demo
+
+> Add your Loom demonstration link here.
+
+---
+
+## License
 
 This project is intended for educational and demonstration purposes.
-
