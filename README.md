@@ -272,15 +272,20 @@ data/
 > Add screenshots of:
 >
 > - React UI
+<img width="1600" height="1068" alt="WhatsApp Image 2026-07-22 at 4 22 06 PM" src="https://github.com/user-attachments/assets/9b9b4b8a-7c5d-4ae2-a992-9369f3e7a3cf" />
+<img width="1582" height="1038" alt="5639b2e0-fe22-4f5a-a513-f1a9f0b4d094" src="https://github.com/user-attachments/assets/7b10aaa1-6d1e-41c8-bf19-bb8bd151669f" />
+
 > - Swagger UI
-> - Sample question and response
-> - System architecture (optional)
+<img width="1911" height="962" alt="image" src="https://github.com/user-attachments/assets/bd102949-800a-46c3-a668-f458202a4b5c" />
+<img width="1812" height="510" alt="image" src="https://github.com/user-attachments/assets/a96a8a85-f409-4a74-aeff-52197900fd14" />
+
+
 
 ---
 
 ## Demo
 
-> Add your Loom demonstration link here.
+> https://www.loom.com/share/dba4e05e15d54f3fb354615caa8854ed
 
 ---
 
