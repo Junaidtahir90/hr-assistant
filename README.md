@@ -1,4 +1,3 @@
-# hr-assistant
 # Simple HR RAG System (Local)
 
 A lightweight Retrieval-Augmented Generation (RAG) application built using **FastAPI**, **LangChain**, **FAISS**, and **Ollama**. The application allows users to ask questions about HR policies stored in PDF documents and receive context-aware responses generated entirely on a local machine.
