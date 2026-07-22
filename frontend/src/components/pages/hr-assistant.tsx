@@ -69,10 +69,10 @@ interface Message {
 
 const QUICK_TOPICS = [
   { label: "Leave Policy", section: "§4" },
-  { label: "Remote Work", section: "§10" },
-  { label: "Resignation", section: "§7" },
-  { label: "Compensation", section: "§11" },
-  { label: "Confidentiality", section: "§9" },
+  { label: "Remote Work Policy", section: "§10" },
+  { label: "Resignation Policy", section: "§7" },
+  { label: "Compensation Policy", section: "§11" },
+  { label: "Confidentiality Policy", section: "§9" },
 ];
 
 export default function HRAssistChat() {
@@ -180,7 +180,7 @@ export default function HRAssistChat() {
                 key={t.label}
                 className="topic-chip"
                 style={styles.chip}
-                onClick={() => sendMessage(`What is the ${t.label.toLowerCase()}?`)}
+                onClick={() => sendMessage(`What is ${t.label.toLowerCase()}?`)}
               >
                 <span style={styles.chipSection}>{t.section}</span>
                 {t.label}
